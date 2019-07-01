@@ -4,11 +4,10 @@ var app = express();
 var bodyParser = require("body-parser");
 // 引入express-session模块调用cookie
 var session = require("express-session");
-// 引入formidable模块存储上传图片
-var formidable = require("formidable");
 //引入路由器模块
 var pageRouter = require("./router/pageRouter");
 var adminRouter = require("./router/adminRouter");
+var eassyRouter = require("./router/eassyRouter");
 // 引入path模块
 var path = require("path");
 
@@ -61,3 +60,4 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //添加路由中间件
 app.use(pageRouter);
 app.use(adminRouter);
+app.use(eassyRouter);

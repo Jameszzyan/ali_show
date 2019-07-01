@@ -15,9 +15,9 @@ module.exports = {
     }
     var avatar = req.session["data" + id].avatar;
     var nickname = req.session["data" + id].nickname;
-    var id = req.session["data" + id].user_id;
+    var user_id = req.session["data" + id].user_id;
     res.render("admin/index", {
-      id: id,
+      id: user_id,
       avatar: avatar,
       nickname: nickname
     });
@@ -68,9 +68,9 @@ module.exports = {
     }
     var avatar = req.session["data" + id].avatar;
     var nickname = req.session["data" + id].nickname;
-    var id = req.session["data" + id].user_id;
+    var user_id = req.session["data" + id].user_id;
     res.render("admin/password-reset", {
-      id: id,
+      id: user_id,
       avatar: avatar,
       nickname: nickname
     });
@@ -135,11 +135,11 @@ module.exports = {
   },
   // 更新用户信息（不包括密码）
   information_update(req, res) {
-    var { alias, nickname, briefIntro, avatar } = req.body;
-    req.session.data.alias = alias;
-    req.session.data.nickname = nickname;
-    req.session.data.briefIntro = briefIntro;
-    req.session.data.avatar = avatar;
+    var { user_id, alias, nickname, briefIntro, avatar } = req.body;
+    req.session["data" + user_id].alias = alias;
+    req.session["data" + user_id].nickname = nickname;
+    req.session["data" + user_id].briefIntro = briefIntro;
+    req.session["data" + user_id].avatar = avatar;
     users.data_update(req.body, req.body.user_id, (err, result) => {
       if (err)
         return res.json({
