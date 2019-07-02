@@ -7,16 +7,16 @@
   </div>
   <ul class="nav">
     <li id='admin'>
-      <a href="/admin"><i class="fa fa-dashboard"></i>仪表盘</a>
+      <a href="/admin/<%=id%>"><i class="fa fa-dashboard"></i>仪表盘</a>
     </li>
     <li>
-      <a href="#menu-posts" class="collapsed" data-toggle="collapse">
+      <a href="#menu-posts" class="collapsed eassyList" data-toggle="collapse">
         <i class="fa fa-thumb-tack"></i>文章<i class="fa fa-angle-right"></i>
       </a>
       <ul id="menu-posts" class="collapse">
         <li id='posts'><a href="/admin/posts/<%=id%>">所有文章</a></li>
         <li id='post-add'><a href="/admin/post-add/<%=id%>">写文章</a></li>
-        <li id='categories'><a href="/admin/categories">分类目录</a></li>
+        <li id='categories'><a href="/admin/categories/<%=id%>">分类目录</a></li>
       </ul>
     </li>
     <li id='comments'>
@@ -26,7 +26,7 @@
       <a href="/admin/users"><i class="fa fa-users"></i>用户</a>
     </li>
     <li>
-      <a href="#menu-settings" class="collapsed" data-toggle="collapse">
+      <a href="#menu-settings" class="collapsed menuList" data-toggle="collapse">
         <i class="fa fa-cogs"></i>设置<i class="fa fa-angle-right"></i>
       </a>
       <ul id="menu-settings" class="collapse">
