@@ -28,11 +28,16 @@ module.exports = {
   },
   // 获取文章有关信息进行前端渲染
   showEassyList(req, res) {
-    eassyModule.data_part_by_id(req.body.id, (err, result) => {
+    console.log(req.body);
+    eassyModule.data_part_by_id(req.body, (err, result1) => {
       if (err) return console.log(err);
-      res.json({
-        code: 0,
-        result: result
+      eassyModule.get_total_eassy(req.body.id, (err, result2) => {
+        if (err) return console.log(err);
+        res.json({
+          code: 0,
+          result: result1,
+          total: result2[0].total
+        });
       });
     });
   },
@@ -83,7 +88,6 @@ module.exports = {
       result[0].created_time = moment(result[0].created_time).format(
         "YYYY-MM-DDTHH:mm:ss"
       );
-      req;
       res.json({
         code: 0,
         msg: "成功读取",
@@ -213,6 +217,40 @@ module.exports = {
         msg: "读取成功",
         result: result
       });
+    });
+  },
+  // 增加新的文章种类
+  add_category(req, res) {
+    eassyModule.add_category(req.body, (err, result) => {
+      console.log(err);
+      if (err)
+        return res.json({
+          code: 1,
+          msg: "文章种类增加失败"
+        });
+      if (result.affectedRows > 0) {
+        res.json({
+          code: 0,
+          msg: "文章种类增加成功"
+        });
+      }
+    });
+  },
+  // 删除文章种类
+  delete_category(req, res) {
+    eassyModule.delete_category(req.body.id, (err, result) => {
+      console.log(err);
+      if (err)
+        return res.json({
+          code: 1,
+          msg: "文章种类删除失败"
+        });
+      if (result.affectedRows > 0) {
+        res.json({
+          code: 0,
+          msg: "文章种类删除成功"
+        });
+      }
     });
   }
 };

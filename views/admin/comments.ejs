@@ -12,16 +12,13 @@
       </div> -->
     <div class="page-action">
       <!-- show when multiple checked -->
-      <div class="btn-batch" style="display: none">
+      <div class="btn-batch">
         <button class="btn btn-info btn-sm">批量批准</button>
         <button class="btn btn-warning btn-sm">批量拒绝</button>
         <button class="btn btn-danger btn-sm">批量删除</button>
       </div>
-      <ul class="pagination pagination-sm pull-right">
+      <ul class="pagination pagination-sm pull-right" style="float:right">
         <li><a href="#">上一页</a></li>
-        <li><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
         <li><a href="#">下一页</a></li>
       </ul>
     </div>
@@ -38,47 +35,40 @@
         </tr>
       </thead>
       <tbody>
-        <tr class="danger">
-          <td class="text-center"><input type="checkbox"></td>
-          <td>大大</td>
-          <td>楼主好人，顶一个</td>
-          <td>《Hello world》</td>
-          <td>2016/10/07</td>
-          <td>未批准</td>
-          <td class="text-center">
-            <a href="post-add.html" class="btn btn-info btn-xs">批准</a>
-            <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
-          </td>
-        </tr>
-        <tr>
-          <td class="text-center"><input type="checkbox"></td>
-          <td>大大</td>
-          <td>楼主好人，顶一个</td>
-          <td>《Hello world》</td>
-          <td>2016/10/07</td>
-          <td>已批准</td>
-          <td class="text-center">
-            <a href="post-add.html" class="btn btn-warning btn-xs">驳回</a>
-            <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
-          </td>
-        </tr>
-        <tr>
-          <td class="text-center"><input type="checkbox"></td>
-          <td>大大</td>
-          <td>楼主好人，顶一个</td>
-          <td>《Hello world》</td>
-          <td>2016/10/07</td>
-          <td>已批准</td>
-          <td class="text-center">
-            <a href="post-add.html" class="btn btn-warning btn-xs">驳回</a>
-            <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
-          </td>
-        </tr>
+
       </tbody>
     </table>
   </div>
 </div>
-
 <%- include('./layouts/admin_aside.ejs'); %>
+<script type="text/template" id="commentList">
+  {{each result}}
+  <tr class="danger">
+    <td class="text-center"><input data-id="{{$value.comments_id}} "type="checkbox"></td>
+    <td>{{$value.author}}</td>
+    <td>{{$value.content}}</td>
+    <td>{{$value.alias}}</td>
+    <td>{{$value.createdTime}}</td>
+    {{if $value.status == "approved" }}
+    <td>批准</td>
+    {{/if}}
+    {{if $value.status == "held" }}
+    <td>未批准</td>
+    {{/if}}
+    {{if $value.status == "rejected" }}
+    <td>拒绝</td>
+    {{/if}}
+    <td class="text-center" style="width:150px;">
+      <a data-id="{{$value.comments_id}}" href="javascript:;" class="btn btn-info btn-xs">批准</a>
+      <a data-id="{{$value.comments_id}}" href="javascript:;" class="btn btn-reject btn-xs" style="color:white;background-color:green;border-color:green">拒绝</a>
+      <a data-id="{{$value.comments_id}}" href="javascript:;" class="btn btn-danger btn-xs">删除</a>
+    </td>
+  </tr>
+  {{/each}}
+</script>
+<script src="/assets/vendors/template/template.js"></script>
+<script src="/assets/vendors/bootstrappaginator/bootstrap-paginator.min.js"></script>
+<script src="/assets/js/admin/comment_list.js"></script>
+
 
 <%- include('./layouts/admin_footer.ejs'); %>

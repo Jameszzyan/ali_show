@@ -26,5 +26,9 @@ router
   // 新增用户文章
   .post("/addEassy", eassyController.addEassy)
   // 修改用户文章
-  .post("/modifyEassy", eassyController.modifyEassy);
+  .post("/modifyEassy", eassyController.modifyEassy)
+  // 增加新的文章种类
+  .post("/add_category", eassyController.add_category)
+  // 删除文章种类
+  .post("/delete_category", eassyController.delete_category);
 module.exports = router;
