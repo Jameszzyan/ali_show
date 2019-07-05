@@ -16,10 +16,16 @@ module.exports = {
     var avatar = req.session["data" + id].avatar;
     var nickname = req.session["data" + id].nickname;
     var user_id = req.session["data" + id].user_id;
-    res.render("admin/index", {
-      id: user_id,
-      avatar: avatar,
-      nickname: nickname
+    users.eassyData_by_id(id, (err, result) => {
+      if (err) return console.log(err);
+      var obj = result[0][0];
+      var origin = {
+        id: user_id,
+        avatar: avatar,
+        nickname: nickname,
+        ...obj
+      };
+      res.render("admin/index", origin);
     });
   },
   // 展示用户登录页面

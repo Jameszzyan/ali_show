@@ -26,6 +26,13 @@
           });
           return false;
         }
+        if ($("#password").val() == "") {
+          $(".alert span").html("密码不能为空");
+          $(".alert-danger").css({
+            display: "block"
+          });
+          return false;
+        }
       },
       dataType: "json",
       success: data => {

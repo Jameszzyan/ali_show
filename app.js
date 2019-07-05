@@ -9,6 +9,7 @@ var pageRouter = require("./router/pageRouter");
 var adminRouter = require("./router/adminRouter");
 var eassyRouter = require("./router/eassyRouter");
 var commentRouter = require("./router/commentRouter");
+var userRouter = require("./router/userRouter");
 // 引入path模块
 var path = require("path");
 
@@ -63,3 +64,4 @@ app.use(pageRouter);
 app.use(adminRouter);
 app.use(eassyRouter);
 app.use(commentRouter);
+app.use(userRouter);

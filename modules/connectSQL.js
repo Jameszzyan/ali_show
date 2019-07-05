@@ -6,6 +6,7 @@ var connection = mysql.createConnection({
   user: "root",
   password: "zhanziyan123",
   database: "ali_show",
-  dateStrings: true
+  dateStrings: true,
+  multipleStatements: true
 });
 module.exports = connection;

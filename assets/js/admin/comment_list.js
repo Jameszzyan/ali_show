@@ -21,6 +21,9 @@
             "background-color": "transparent"
           });
           var pageSum = Math.ceil(data.total / pageSize);
+          if (pageSum == 0) {
+            pageSum = 1;
+          }
           setPage(currentPage, pageSum, render);
           // 页面每次刷新全选框取消勾选
           $("thead input").prop({
@@ -72,22 +75,24 @@
   // 评论项删除
   $("tbody").on("click", "a.btn-danger", function(event) {
     event.preventDefault();
-    var arr = [];
-    arr.push(Number($(this).data("id")));
-    $.ajax({
-      url: "/comment_delete",
-      type: "post",
-      data: {
-        arr: JSON.stringify(arr)
-      },
-      dataType: "json",
-      success: data => {
-        if (data.code == 0) {
-          currentPage = Number($("ul.pagination li.active").text());
-          render();
+    if (window.confirm("是否删除该条评论")) {
+      var arr = [];
+      arr.push(Number($(this).data("id")));
+      $.ajax({
+        url: "/comment_delete",
+        type: "post",
+        data: {
+          arr: JSON.stringify(arr)
+        },
+        dataType: "json",
+        success: data => {
+          if (data.code == 0) {
+            currentPage = Number($("ul.pagination li.active").text());
+            render();
+          }
         }
-      }
-    });
+      });
+    }
   });
   // 评论项拒绝
   $("tbody").on("click", "a.btn-reject", function(event) {
@@ -142,28 +147,30 @@
   });
   // 评论批量删除
   $("div.btn-batch .btn-danger").on("click", function(event) {
-    var arr = [];
-    var $checkbox = $("tr.danger input:checked");
-    $checkbox.each(function(index, item) {
-      arr.push(Number(item.getAttribute("data-id")));
-    });
-    $.ajax({
-      url: "/comment_delete",
-      type: "post",
-      beforeSend: () => {
-        if (arr.length == 0) return false;
-      },
-      data: {
-        arr: JSON.stringify(arr)
-      },
-      dataType: "json",
-      success: data => {
-        if (data.code == 0) {
-          currentPage = Number($("ul.pagination li.active").text());
-          render();
+    if (window.confirm("是否删除选择的评论项")) {
+      var arr = [];
+      var $checkbox = $("tr.danger input:checked");
+      $checkbox.each(function(index, item) {
+        arr.push(Number(item.getAttribute("data-id")));
+      });
+      $.ajax({
+        url: "/comment_delete",
+        type: "post",
+        beforeSend: () => {
+          if (arr.length == 0) return false;
+        },
+        data: {
+          arr: JSON.stringify(arr)
+        },
+        dataType: "json",
+        success: data => {
+          if (data.code == 0) {
+            currentPage = Number($("ul.pagination li.active").text());
+            render();
+          }
         }
-      }
-    });
+      });
+    }
   });
   // 评论批量拒绝
   $("div.btn-batch .btn-warning").on("click", function(event) {

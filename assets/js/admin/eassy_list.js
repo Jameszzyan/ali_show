@@ -19,6 +19,9 @@
           var html = template("eassyList", data);
           $("table tbody").html(html);
           var pageSum = Math.ceil(data.total / pageSize);
+          if (pageSum == 0) {
+            pageSum = 1;
+          }
           setPage(currentPage, pageSum, render);
         }
       }
@@ -58,18 +61,20 @@
   // 删除文章(在数据库中将status设为trashed)
   $("tbody").on("click", "a.btn-danger", function(event) {
     event.preventDefault();
-    $.ajax({
-      url: "/change_status",
-      type: "post",
-      data: {
-        id: $(".post_id").val()
-      },
-      dataType: "json",
-      success: data => {
-        if (data.code == 0) {
-          location.reload();
+    if (window.confirm("是否删除该文章")) {
+      $.ajax({
+        url: "/change_status",
+        type: "post",
+        data: {
+          id: $(".post_id").val()
+        },
+        dataType: "json",
+        success: data => {
+          if (data.code == 0) {
+            location.reload();
+          }
         }
-      }
-    });
+      });
+    }
   });
 })();

@@ -10,9 +10,21 @@ module.exports = {
       callback(null, result);
     });
   },
-  //  找出目前文章所有的分类
-  find_all_categories(callback) {
-    var str = `SELECT * FROM categories WHERE name != '未分类'`;
+
+  //  找出目前分类对应页数的数据
+  find_all_categories(currentPage, pageSize, callback) {
+    var str = `SELECT * FROM categories WHERE name != '未分类' LIMIT ${(currentPage -
+      1) *
+      pageSize},${pageSize}`;
+    connection.query(str, (err, result) => {
+      if (err) return callback(err, null);
+      callback(null, result);
+    });
+  },
+
+  // 找出所有分类的总数
+  find_total_categories(callback) {
+    var str = `SELECT count(*) AS total FROM categories WHERE name != '未分类'`;
     connection.query(str, (err, result) => {
       if (err) return callback(err, null);
       callback(null, result);

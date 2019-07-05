@@ -28,7 +28,6 @@ module.exports = {
   },
   // 获取文章有关信息进行前端渲染
   showEassyList(req, res) {
-    console.log(req.body);
     eassyModule.data_part_by_id(req.body, (err, result1) => {
       if (err) return console.log(err);
       eassyModule.get_total_eassy(req.body.id, (err, result2) => {
@@ -204,20 +203,32 @@ module.exports = {
       }
     });
   },
-  // 获取所有分类进行前端渲染
+  // 获取对应页码的分类进行前端渲染
   get_all_categories(req, res) {
-    eassyModule.find_all_categories((err, result) => {
-      if (err)
-        return res.json({
-          code: 1,
-          msg: "读取失败"
+    eassyModule.find_all_categories(
+      req.body.currentPage,
+      req.body.pageSize,
+      (err, result1) => {
+        if (err)
+          return res.json({
+            code: 1,
+            msg: "读取失败"
+          });
+        eassyModule.find_total_categories((err, result2) => {
+          if (err)
+            return res.json({
+              code: 2,
+              msg: "读取失败"
+            });
+          res.json({
+            code: 0,
+            msg: "读取成功",
+            result: result1,
+            total: result2[0].total
+          });
         });
-      res.json({
-        code: 0,
-        msg: "读取成功",
-        result: result
-      });
-    });
+      }
+    );
   },
   // 增加新的文章种类
   add_category(req, res) {
