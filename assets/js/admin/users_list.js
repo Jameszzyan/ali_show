@@ -112,6 +112,15 @@
             return false;
           }
         }
+        /*  var email = $("#email").val();
+        var emailFormat = /^\w+[@]\w+\.com$/g;
+        if (!emailFormat.test(email)) {
+          $(".alert span").html("<strong>错误！</strong>邮箱格式错误");
+          $(".alert-danger").css({
+            display: "block"
+          });
+          return false;
+        } */
       },
       data: $("form").serialize(),
       dataType: "json",

@@ -12,7 +12,7 @@
       beforeSend: () => {
         // 发送数据之前先进行验证，包括邮箱是否为空，邮箱格式是否正确
         var email = $("#email").val();
-        var emailFormat = /^\w+@\w+.com$/g;
+        var emailFormat = /^\w+[@]\w+\.com$/g;
         if (email == "") {
           $(".alert span").html("邮箱不能为空");
           $(".alert-danger").css({

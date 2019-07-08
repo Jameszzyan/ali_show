@@ -1,4 +1,21 @@
 (function() {
+  //获取所有分类进行前端渲染
+  $.ajax({
+    url: "/get_all_categories",
+    type: "post",
+    data: {
+      currentPage: 1,
+      pageSize: 100
+    },
+    dataType: "json",
+    success: data => {
+      if (data.code == 0) {
+        var html = template("all_categories", data);
+        $("#category").html(html);
+      }
+    }
+  });
+
   // 根据href判断是编辑页面还是增加页面
   var href = location.href;
   if (href.indexOf("posts_id") != -1) {
@@ -50,24 +67,12 @@
   // 使用富文本框ckeditor
   CKEDITOR.replace("content");
 
-  //获取所有分类进行前端渲染
-  $.ajax({
-    url: "/get_all_categories",
-    type: "post",
-    dataType: "json",
-    success: data => {
-      if (data.code == 0) {
-        var html = template("all_categories", data);
-        $("#category").html(html);
-      }
-    }
-  });
-
   // 上传用户选择特色图片
   $("input#feature").on("change", function(event) {
     var formData = new FormData();
     var input = document.querySelector("#feature");
     formData.append("feature", input.files[0]);
+    console.log(formData.getAll("feature"));
     $.ajax({
       url: "/uploadFeature",
       type: "post",

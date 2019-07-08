@@ -209,6 +209,7 @@ module.exports = {
       req.body.currentPage,
       req.body.pageSize,
       (err, result1) => {
+        console.log(err);
         if (err)
           return res.json({
             code: 1,
