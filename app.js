@@ -56,6 +56,15 @@ app.use((req, res, next) => {
   }
 });
 
+// 允许前端跨域访问
+app.all('*', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header('Access-Control-Allow-Headers', 'Content-type');
+  res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS,PATCH");
+  res.header('Access-Control-Max-Age',1728000);//预请求缓存20天
+  next();  
+});
+
 // 引入bodyParser中间件
 app.use(bodyParser.urlencoded({ extended: false }));
 
